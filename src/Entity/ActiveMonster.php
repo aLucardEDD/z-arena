@@ -10,8 +10,9 @@ class ActiveMonster
     private int $attack;
     private int $xpReward;
     private ?string $imagePath;
+    private int $idTemplate;
 
-    public function __construct(string $name, int $hp, int $attack, int $xpReward, ?string $imagePath = null)
+    public function __construct(string $name, int $hp, int $attack, int $xpReward, ?string $imagePath = null, int $templateId)
     {
         $this->name = $name;
         $this->hp = $hp;
@@ -19,6 +20,11 @@ class ActiveMonster
         $this->attack = $attack;
         $this->xpReward = $xpReward;
         $this->imagePath = $imagePath;
+        $this->templateId = $templateId;
+
+    }
+    public function getTemplateId(): int { 
+        return $this->templateId; 
     }
 
     public function getName(): string { 

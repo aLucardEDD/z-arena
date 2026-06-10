@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 // Importation obligatoire du contrôleur CRUD !
 use App\Controller\Admin\HeroTemplateCrudController; 
 use App\Controller\Admin\EnnemiesTemplateCrudController;
+use App\Controller\Admin\ItemTemplateCrudController; 
+use App\Controller\Admin\SkillCrudController; 
 
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
@@ -33,9 +35,10 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         
-        // LA NOUVELLE SYNTAXE EASYADMIN 5 : linkTo() au lieu de linkToCrud()
-        // Ordre : Contrôleur en premier -> Label -> Icône
+
         yield MenuItem::linkTo(HeroTemplateCrudController::class, 'Stats des Héros', 'fas fa-address-book');
         yield MenuItem::linkTo(EnnemiesTemplateCrudController::class, 'Stats des Ennemis', 'fas fa-ghost');
+        yield MenuItem::linkTo(ItemTemplateCrudController::class, 'Catalogue Objets', 'fas fa-box');
+        yield MenuItem::linkTo(SkillCrudController::class, 'Catalogue des compétences', 'fas fa-box');
     }
 }

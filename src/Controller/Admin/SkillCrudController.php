@@ -1,6 +1,6 @@
 <?php
 
-namespace Skills;
+namespace App\Controller\Admin;
 
 use App\Entity\Skill;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -29,9 +29,10 @@ class SkillCrudController extends AbstractCrudController
                 'Buffs' => 'buff'
             ])
             ->renderExpanded(false) // false = menu déroulant, true = boutons radio
-            ->renderAsBadges();     // (Optionnel) Ajoute un joli design de badge dans la liste
-        yield IntegerField::new('niveauRequis', 'Niveau requis');
+            ->renderAsBadges();     
+        yield IntegerField::new('niveau_requis', 'Niveau requis');
         yield IntegerField::new('damage', 'Dommages infligés ou de buff ou de soin');
-        
+        yield IntegerField::new('duree', 'Durée du buff (en tours)');
+
     }
 }

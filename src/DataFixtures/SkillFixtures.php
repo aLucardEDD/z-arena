@@ -21,9 +21,9 @@ class SkillFixtures extends Fixture
             ['name' => 'Sokidan', 'identifier' => 'sokidan', 'ki_cost' => 25, 'damage' => 50, 'type' => 'damage', 'niveau_requis' => 2],
             ['name' => 'Roga Fufu Ken', 'identifier' => 'roga_fufu_ken', 'ki_cost' => 12, 'damage' => 30, 'type' => 'damage', 'niveau_requis' => 1],
             ['name' => 'Soin', 'identifier' => 'soin', 'ki_cost' => 12, 'damage' => 50, 'type' => 'heal', 'niveau_requis' => 1],
-            ['name' => 'Kaioken', 'identifier' => 'kaioken', 'ki_cost' => 30, 'damage' => 15, 'type' => 'buff', 'niveau_requis' => 1],
-            ['name' => 'Super Saiyan', 'identifier' => 'super_saiyan', 'ki_cost' => 60, 'damage' => 40, 'type' => 'buff', 'niveau_requis' => 1]
-            
+            ['name' => 'Kaioken', 'identifier' => 'kaioken', 'ki_cost' => 30, 'damage' => 15, 'type' => 'buff', 'niveau_requis' => 1, 'duree' => 5],
+            ['name' => 'Super Saiyan', 'identifier' => 'super_saiyan', 'ki_cost' => 60, 'damage' => 40, 'type' => 'buff', 'niveau_requis' => 1, 'duree' => 10]
+
         ];
 
         foreach ($skillsData as $data) {
@@ -34,6 +34,7 @@ class SkillFixtures extends Fixture
             $skill->setDamage($data['damage']);
             $skill->setType($data['type']);
             $skill->setNiveauRequis($data['niveau_requis']);
+            $skill->setDuree($data['duree']);
 
             $manager->persist($skill);
         }

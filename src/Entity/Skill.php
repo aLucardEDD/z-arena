@@ -39,9 +39,19 @@ class Skill
     #[ORM\ManyToMany(targetEntity: HeroTemplate::class, mappedBy: 'skills')]
     private Collection $hero;
 
+    /**
+     * @var Collection<int, PartieEnCours>
+     */
+    #[ORM\ManyToMany(targetEntity: PartieEnCours::class, mappedBy: 'skills')]
+    private Collection $partieEnCours;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $duree = null;
+
     public function __construct()
     {
         $this->hero = new ArrayCollection();
+        $this->partieEnCours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,6 +154,49 @@ class Skill
         if ($this->hero->removeElement($hero)) {
             $hero->removeSkill($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PartieEnCours>
+     */
+    public function getPartieEnCours(): Collection
+    {
+        return $this->partieEnCours;
+    }
+
+    public function addPartieEnCour(PartieEnCours $partieEnCour): static
+    {
+        if (!$this->partieEnCours->contains($partieEnCour)) {
+            $this->partieEnCours->add($partieEnCour);
+            $partieEnCour->addSkill($this);
+        }
+
+        return $this;
+    }
+
+    public function removePartieEnCour(PartieEnCours $partieEnCour): static
+    {
+        if ($this->partieEnCours->removeElement($partieEnCour)) {
+            $partieEnCour->removeSkill($this);
+        }
+
+        return $this;
+    }
+    public function __toString(): string
+    {
+        return (string) $this->name; 
+    }
+
+    public function getDuree(): ?int
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?int $duree): static
+    {
+        $this->duree = $duree;
 
         return $this;
     }

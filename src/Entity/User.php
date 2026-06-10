@@ -36,6 +36,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist'])]
+    private ?PartieEnCours $partieEnCours = null;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?UserStats $userStats = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,10 +111,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function __serialize(): array
     {
-        $data = (array) $this;
-        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
+        return [
+            'id' => $this->id,
+            'username' => $this->username,
+            'password' => $this->password,
+        ];
+    }
 
-        return $data;
+    public function __unserialize(array $data): void
+    {
+        $this->id = $data['id'] ?? null;
+        $this->username = $data['username'] ?? null;
+        $this->password = $data['password'] ?? null;
     }
 
     public function getEmail(): ?string
@@ -119,6 +133,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPartieEnCours(): ?PartieEnCours
+    {
+        return $this->partieEnCours;
+    }
+
+    public function setPartieEnCours(?PartieEnCours $partieEnCours): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($partieEnCours === null && $this->partieEnCours !== null) {
+            $this->partieEnCours->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($partieEnCours !== null && $partieEnCours->getUser() !== $this) {
+            $partieEnCours->setUser($this);
+        }
+
+        $this->partieEnCours = $partieEnCours;
+
+        return $this;
+    }
+
+    public function getUserStats(): ?UserStats
+    {
+        return $this->userStats;
+    }
+
+    public function setUserStats(UserStats $userStats): static
+    {
+        // set the owning side of the relation if necessary
+        if ($userStats->getUser() !== $this) {
+            $userStats->setUser($this);
+        }
+
+        $this->userStats = $userStats;
 
         return $this;
     }

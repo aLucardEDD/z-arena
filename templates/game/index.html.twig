@@ -1,20 +1,53 @@
+{# ECRAN PRINCIPAL CHOIX DES PERSONNAGES ETC #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello GameController!{% endblock %}
+{% block title %}Accueil du Jeu
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div>
+        <h1>Bienvenue, {{ app.user.userIdentifier }}!</h1> 
+        {% if is_granted('ROLE_ADMIN') %}
+            <div>
+                <a href="{{ path('admin') }}">Accéder au Back Office</a>
+            </div>
+        {% endif %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <form action="{{ path('app_logout') }}" method="POST">
+            <button type="submit">Se déconnecter</button>
+        </form>
+        
+        {% if activeHero %}    {# si le joueur a une partie en cours #}        
+            <h2>Partie en cours : {{ activeHero.name | capitalize }} (Niveau {{ activeHero.level }})</h2>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/mhainy/projets/z-arena/src/Controller/GameController.php</code></li>
-        <li>Your template at <code>/home/mhainy/projets/z-arena/templates/game/index.html.twig</code></li>
-    </ul>
-</div>
+                <form action="{{path('app_arena') }}"method="GET">  {# symfony donne une erreur si POST #}
+                    {# aucun CRUD donc il faut obligatoirement GET #}
+                    <button type="submit">Continuer la partie</button>
+                </form> 
+
+                <form action="{{ path('app_game_restart') }}" method="POST"> {# symfony donne une erreur si GET #}
+                    {# CRUD ici dont il faut POST#}
+                    <button type="submit">Recommencer (Écraser la sauvegarde)</button>
+                </form>
+        {% else %}
+
+            {# si aucune partie en cours #}
+            <h2>Aucune partie en cours. Choisissez votre héros :</h2>
+
+            <div>
+                <form action="{{ path('app_game_create', {'type': 'goku'}) }}" method="POST">
+                    <button type="submit">Choisir Goku</button>
+                </form>
+
+                <form action="{{ path('app_game_create', {'type': 'piccolo'}) }}" method="POST">
+                    <button type="submit">Choisir Piccolo</button>
+                </form>
+
+                <form action="{{ path('app_game_create', {'type': 'yamcha'}) }}" method="POST" >
+                    <button type="submit">Choisir Yamcha</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

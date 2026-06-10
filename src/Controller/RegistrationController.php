@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\UserStats;
 use App\Form\RegistrationFormType;
 use App\Security\AppAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,6 +31,15 @@ class RegistrationController extends AbstractController
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
             $entityManager->persist($user);
+
+            $userStats = new UserStats(); // instance userStats
+            $userStats->setUser($user);
+            $userStats->setBoostPv(0);
+            $userStats->setBoostKi(0);
+            $userStats->setBoostAttack(0);
+
+            $entityManager->persist($userStats);
+
             $entityManager->flush();
 
             // do anything else you need here, like send an email

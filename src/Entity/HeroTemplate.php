@@ -130,3 +130,4 @@ class HeroTemplate
         return $this;
     }
 }
+

@@ -19,16 +19,16 @@ class HeroTemplateCrudController extends AbstractCrudController
     {
         yield TextField::new('name', 'Nom du personnage');
         yield IntegerField::new('baseHp', 'Points de Vie (HP)');
-        yield IntegerField::new('baseMp', 'Points de Mana (MP)');
-        yield IntegerField::new('baseAttack', 'Attaque de base');
+        yield IntegerField::new('baseKi', 'Points de Ki (MP)');
+        yield IntegerField::new('attack', 'Attaque de base');
         yield TextField::new('imagePath', 'Nom du fichier image (ex: goku.png)');
         
-        // La liste magique des compétences (cases à cocher)
+
         yield AssociationField::new('skills', 'Catalogue des compétences disponibles')
             ->setFormTypeOptions([
-                'by_reference' => false, // Obligatoire pour Symfony
-                'multiple' => true,      // On peut en choisir plusieurs
-                'expanded' => true,      // Affiche des cases à cocher au lieu d'une liste déroulante
+                'by_reference' => false, 
+                'multiple' => true,      
+                'expanded' => true,     
             ]);
     }
 }

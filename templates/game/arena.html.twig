@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Arène de Combat{% endblock %}
+
+{% block body %}
+<div style="text-align: center; margin-top: 30px; font-family: 'Courier New', Courier, monospace;">
+    
+    <h1>Monde {{ hero.currentWorld }} - Etage {{ hero.currentStage }}</h1>
+    
+    {# --- ZONE DE COMBAT VISUELLE --- #}
+    <div style="display: flex; justify-content: space-around; margin: 40px 0; align-items: center;">
+        <div style="border: 2px solid #0d6efd; padding: 20px; border-radius: 10px; width: 25%;">
+            
+            {# CORRECTION ICI : hero.name au lieu de hero.heroClass #}
+            <h3>{{ hero.name | capitalize }}</h3>
+            
+            {# CORRECTION ICI : hero.imagePath au lieu de hero.avatar #}
+            <img src="{{ asset('images/' ~ hero.imagePath) }}" alt="{{ hero.name }}" style="width: 150px; border-radius: 10px; border: 2px solid #fff;">
+        </div>
+
+        <h2 style="color: red; font-style: italic;">VS</h2>
+
+        <div style="border: 2px solid red; padding: 20px; border-radius: 10px; width: 25%;">
+            <h3>{{ monster.name }}</h3>
+            
+            {% if monster.imagePath %}
+                <img src="{{ asset('images/' ~ monster.imagePath) }}" alt="{{ monster.name }}" style="width: 150px; border-radius: 10px; border: 2px solid #fff; margin-bottom: 15px;">
+            {% endif %}
+            
+            <p>HP: {{ monster.hp }} / {{ monster.maxHp }}</p>
+        </div>
+    </div>
+
+    {# --- LE COMMAND MENU STYLE FINAL FANTASY --- #}
+    <div style="background-color: #000080; color: white; border: 3px double white; border-radius: 5px; padding: 20px; display: flex; text-align: left; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+        
+        <div style="width: 30%; border-right: 2px solid white; padding-right: 20px;">
+            
+            {# CORRECTION ICI : hero.name au lieu de hero.heroClass #}
+            <h4 style="text-decoration: underline; color: #00ffff;">{{ hero.name | capitalize }}</h4>
+            <p><strong>PV :</strong> {{ hero.hp }} / {{ hero.maxHp }}</p>
+            <p><strong>PM :</strong> {{ hero.ki }} / {{ hero.maxKi }}</p>
+            <p><strong>Héros : Niveau {{ hero.level }} | XP : {{ hero.xp }}</strong></p>
+        </div>
+
+        <div style="width: 70%; padding-left: 20px; position: relative;">
+            
+            <div id="menu-main" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <a href="{{ path('app_arena_attack', { action: 'attack' }) }}" data-turbo-prefetch="false" style="color: white; text-decoration: none; font-size: 1.2rem; cursor: pointer;">👉 ATTAQUER</a>
+                <span onclick="switchMenu('menu-skills')" style="color: white; text-decoration: none; font-size: 1.2rem; cursor: pointer;">👉 COMPÉTENCES</span>
+                <span onclick="switchMenu('menu-items')" style="color: white; text-decoration: none; font-size: 1.2rem; cursor: pointer;">👉 INVENTAIRE</span>
+                <a href="{{ path('app_game') }}" style="color: white; text-decoration: none; font-size: 1.2rem;">👉 FUITE</a>
+            </div>
+
+            <div id="menu-skills" style="display: none; grid-template-columns: 1fr 1fr; gap: 15px;">
+                {% for competence in competences %}
+                    <a href="{{ path('app_arena_attack', {'action': competence.identifiant}) }}" data-turbo-prefetch="false" class="btn btn-primary" style="margin-right: 10px;">
+                        {{ competence.name }} ({{ competence.kiCost }} MP)
+                    </a>
+                {% endfor %}
+                <div></div>
+                <span onclick="switchMenu('menu-main')" style="color: #ff00ff; cursor: pointer; font-size: 1.1rem;">🔙 RETOUR</span>
+            </div>
+
+            <div id="menu-items" style="display: none; grid-template-columns: 1fr 1fr; gap: 15px;">
+                {% for invItem in inventory %}
+                    {# On envoie 'item_ID' à la route d'action #}
+                    <a href="{{ path('app_arena_attack', {action: 'item_' ~ invItem.id}) }}" style="color: #00ff00; text-decoration: none; font-size: 1.1rem;">
+                        🧪 {{ invItem.itemTemplate.name }} (x{{ invItem.quantity }})
+                    </a>
+                {% else %}
+                    <span style="color: #888; font-style: italic; font-size: 1.1rem; grid-column: span 2;">Inventaire vide</span>
+                {% endfor %}
+                
+                <div></div>
+                <span onclick="switchMenu('menu-main')" style="color: #ff00ff; cursor: pointer; font-size: 1.1rem;">🔙 RETOUR</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{# --- LE PETIT SCRIPT JS POUR INTERAGIR --- #}
+<script>
+function switchMenu(menuId) {
+    // On masque tous les menus possibles
+    document.getElementById('menu-main').style.display = 'none';
+    document.getElementById('menu-skills').style.display = 'none';
+    document.getElementById('menu-items').style.display = 'none';
+
+    // On affiche uniquement celui demandé
+    document.getElementById(menuId).style.display = 'grid';
+}
+</script>
+{% endblock %}

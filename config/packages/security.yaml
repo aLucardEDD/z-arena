@@ -21,8 +21,10 @@ security:
             custom_authenticator: App\Security\AppAuthenticator
             logout:
                 path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
+            login_throttling: 
+                max_attempts: 3          
+                interval: '30 minutes'
+
 
             remember_me:
                 secret: '%kernel.secret%'

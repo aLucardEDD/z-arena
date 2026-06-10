@@ -1,3 +1,6 @@
-body {
-    background-color: skyblue;
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+    --white: rgb(251, 250, 248);
+    --black: rgb(2, 25, 39);
 }

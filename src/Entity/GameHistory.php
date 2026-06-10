@@ -22,8 +22,10 @@ class GameHistory
     #[ORM\Column]
     private ?int $reached_stage = null;
 
-    #[ORM\Column]
-    private ?int $user_id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $username = null;
+
 
     #[ORM\Column]
     private ?\DateTimeImmutable $started_at = null;
@@ -72,17 +74,6 @@ class GameHistory
         return $this;
     }
 
-    public function getUserId(): ?int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): static
-    {
-        $this->user_id = $user_id;
-
-        return $this;
-    }
 
     public function getStartedAt(): ?\DateTimeImmutable
     {
@@ -106,5 +97,17 @@ class GameHistory
         $this->finished_at = $finished_at;
 
         return $this;
+    }
+
+   
+    public function setUsername(string $username): static
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
     }
 }
