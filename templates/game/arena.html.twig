@@ -46,7 +46,11 @@
         <div style="width: 70%; padding-left: 20px; position: relative;">
             
             <div id="menu-main" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <a href="{{ path('app_arena_attack', { action: 'attack' }) }}" data-turbo-prefetch="false" style="color: white; text-decoration: none; font-size: 1.2rem; cursor: pointer;">👉 ATTAQUER</a>
+                <form action="{{ path('app_arena_attack', { action: 'attack' }) }}" method="post" style="display: inline;">
+                    <button type="submit" style="background: none; border: none; padding: 0; color: white; font-size: 1.2rem; cursor: pointer; font-family: inherit;">
+                        👉 ATTAQUER
+                    </button>
+                </form>
                 <span onclick="switchMenu('menu-skills')" style="color: white; text-decoration: none; font-size: 1.2rem; cursor: pointer;">👉 COMPÉTENCES</span>
                 <span onclick="switchMenu('menu-items')" style="color: white; text-decoration: none; font-size: 1.2rem; cursor: pointer;">👉 INVENTAIRE</span>
                 <a href="{{ path('app_game') }}" style="color: white; text-decoration: none; font-size: 1.2rem;">👉 FUITE</a>
@@ -54,9 +58,11 @@
 
             <div id="menu-skills" style="display: none; grid-template-columns: 1fr 1fr; gap: 15px;">
                 {% for competence in competences %}
-                    <a href="{{ path('app_arena_attack', {'action': competence.identifiant}) }}" data-turbo-prefetch="false" class="btn btn-primary" style="margin-right: 10px;">
-                        {{ competence.name }} ({{ competence.kiCost }} MP)
-                    </a>
+                    <form action="{{ path('app_arena_attack', {'action': competence.identifiant}) }}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-primary" style="margin-right: 10px;">
+                            {{ competence.name }} ({{ competence.kiCost }} MP)
+                        </button>
+                    </form>
                 {% endfor %}
                 <div></div>
                 <span onclick="switchMenu('menu-main')" style="color: #ff00ff; cursor: pointer; font-size: 1.1rem;">🔙 RETOUR</span>
@@ -65,9 +71,11 @@
             <div id="menu-items" style="display: none; grid-template-columns: 1fr 1fr; gap: 15px;">
                 {% for invItem in inventory %}
                     {# On envoie 'item_ID' à la route d'action #}
-                    <a href="{{ path('app_arena_attack', {action: 'item_' ~ invItem.id}) }}" style="color: #00ff00; text-decoration: none; font-size: 1.1rem;">
-                        🧪 {{ invItem.itemTemplate.name }} (x{{ invItem.quantity }})
-                    </a>
+                    <form action="{{ path('app_arena_attack', {action: 'item_' ~ invItem.id}) }}" method="post" style="display: inline;">
+                        <button type="submit" style="background: none; border: none; padding: 0; color: #00ff00; font-size: 1.1rem; cursor: pointer; font-family: inherit;">
+                            🧪 {{ invItem.itemTemplate.name }} (x{{ invItem.quantity }})
+                        </button>
+                    </form>
                 {% else %}
                     <span style="color: #888; font-style: italic; font-size: 1.1rem; grid-column: span 2;">Inventaire vide</span>
                 {% endfor %}

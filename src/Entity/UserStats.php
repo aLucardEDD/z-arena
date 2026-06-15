@@ -85,4 +85,19 @@ class UserStats
         $this->boostKi = 0;
         $this->boostAttack = 0;
     }
+
+    public function getGamesPlayedVirtual(): ?int
+    {
+        return null;
+    }
+
+    public function getHighestFloorVirtual(): ?int
+    {
+        return null;
+    }
+
+    public function getTotalPlaytimeVirtual(): ?string
+    {
+        return null;
+    }
 }

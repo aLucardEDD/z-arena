@@ -12,12 +12,12 @@ class ItemTemplateFixtures extends Fixture implements DependentFixtureInterface
     {
 
         $items = [
-            ['Capsule Vie S', 'heal', 30, 30, 'capsule_vie_s.png', 'Une petite capsule de soin.'],
-            ['Capsule Ki S', 'ki_restore', 30, 30, 'capsule_ki_s.png', 'Une petite capsule d\'énergie.'],
-            ['Capsule Vie M', 'heal', 70, 15, 'capsule_vie_m.png', 'Une capsule de soin moyenne.'],
-            ['Capsule Ki M', 'ki_restore', 70, 15, 'capsule_ki_m.png', 'Une capsule d\'énergie moyenne.'],
-            ['Capsule Totale L', 'heal_ki_restore', 100, 5, 'capsule_totale_l.png', 'Restaure PV et Ki.'],
-            ['Senzu', 'heal_ki_restore', 999, 5, 'senzu.png', 'Le haricot magique miracle.'],
+            ['Capsule Vie S', 'heal', 10, 30, 'capsule_vie_s.png', 'Une petite capsule de soin.'],
+            ['Capsule Ki S', 'ki_restore', 10, 30, 'capsule_ki_s.png', 'Une petite capsule d\'énergie.'],
+            ['Capsule Vie M', 'heal', 25, 15, 'capsule_vie_m.png', 'Une capsule de soin moyenne.'],
+            ['Capsule Ki M', 'ki_restore', 25, 15, 'capsule_ki_m.png', 'Une capsule d\'énergie moyenne.'],
+            ['Capsule Totale L', 'heal_ki_restore', 50, 5, 'capsule_totale_l.png', 'Restaure PV et Ki.'],
+            ['Senzu', 'heal_ki_restore', 100, 5, 'senzu.png', 'Le haricot magique miracle.'],
 
             ['Entraînement : Force S', 'buff_attack', 5, 26, 'buff_atk.png', 'Augmente de manière permanente votre attaque de base de 5 points.'],
             ['Entraînement : Endurance S', 'buff_pv', 10, 26, 'buff_hp.png', 'Augmente de manière permanente vos PV max de 10 points.'],

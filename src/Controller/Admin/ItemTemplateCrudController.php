@@ -30,7 +30,7 @@ class ItemTemplateCrudController extends AbstractCrudController
                 'Buffs Attaque' => 'buff_attack'
             ])
             ->renderExpanded(false) // false = menu déroulant, true = boutons radio
-            ->renderAsBadges();     // (Optionnel) Ajoute un joli design de badge dans la liste
+            ->renderAsBadges();     
         yield IntegerField::new('value', 'Valeur de l\'item (soins, régénération ou buff)');   
         yield TextField::new('imagePath', 'Nom du fichier image (ex: potion.png)');    
         yield TextField::new('description', 'Description de l\'item'); 

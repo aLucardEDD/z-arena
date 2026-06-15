@@ -256,7 +256,12 @@ final class GameController extends AbstractController
             $session->set('current_monster', $monster);
             
         }
-
+        if($hero->getHp() > $hero->getMaxHp()) {
+            $hero->setHp($hero->getMaxHp());
+        }
+        if($hero->getKi() > $hero->getMaxKi()) {
+            $hero->setKi($hero->getMaxKi());
+        }
         // recupere les compétences du héros pour pouvoir les afficher
         $heroSkills = $hero->getSkills();
         // recupere l'inventaire 
@@ -270,7 +275,7 @@ final class GameController extends AbstractController
         ]);
     }
 
-    #[Route('/arena/action/{action}', name: 'app_arena_attack')]
+    #[Route('/arena/action/{action}', name: 'app_arena_attack', methods: ['POST'])]
     public function attackAction(string $action, RequestStack $requestStack, EntityManagerInterface $entityManager, SkillRepository $skillRepository): Response
     {
         /** @var \App\Entity\User|null $user */
@@ -314,20 +319,25 @@ final class GameController extends AbstractController
 
                 switch ($template->getType()) {
                     case 'heal':
+                        // soins en pourcentage
+                        $soinsHp = (int) round($hero->getMaxHp() * ($valeur / 100));
                         // on se soigne sans dépasser max hp
-                        $hero->setHp(min($hero->getMaxHp(), $hero->getHp() + $valeur));
-                        $this->addFlash('success', "Vous utilisez {$template->getName()} et récupérez {$valeur} PV !");
+                        $hero->setHp(min($hero->getMaxHp(), $hero->getHp() + $soinsHp));
+                        $this->addFlash('success', "Vous utilisez {$template->getName()} et récupérez {$soinsHp} PV !");
                         break;
                     case 'ki_restore':
+                        $soinsKi = (int) round($hero->getMaxKi() * ($valeur / 100));
                         // pareil mais pour le ki
-                        $hero->setKi(min($hero->getMaxKi(), $hero->getKi() + $valeur));
-                        $this->addFlash('success', "Vous utilisez {$template->getName()} et récupérez {$valeur} de Ki !");
+                        $hero->setKi(min($hero->getMaxKi(), $hero->getKi() + $soinsKi));
+                        $this->addFlash('success', "Vous utilisez {$template->getName()} et récupérez {$soinsKi} de Ki !");
                         break;
                     case 'heal_ki_restore':
+                        $soinsHp = (int) round($hero->getMaxHp() * ($valeur / 100));
+                        $soinsKi = (int) round($hero->getMaxKi() * ($valeur / 100)); 
                         // les deux en même temps
-                        $hero->setHp(min($hero->getMaxHp(), $hero->getHp() + $valeur));
-                        $hero->setKi(min($hero->getMaxKi(), $hero->getKi() + $valeur));
-                        $this->addFlash('success', "Vous utilisez {$template->getName()} et restaurez vos PV/Ki !");
+                        $hero->setHp(min($hero->getMaxHp(), $hero->getHp() + $soinsHp));
+                        $hero->setKi(min($hero->getMaxKi(), $hero->getKi() + $soinsKi));
+                        $this->addFlash('success', "Vous utilisez {$template->getName()} et restaurez vos PV/Ki de {$valeur} !");
                         break;
                 }
 

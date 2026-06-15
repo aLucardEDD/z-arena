@@ -32,7 +32,7 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
 
-            $userStats = new UserStats(); // instance userStats
+            $userStats = new UserStats();
             $userStats->setUser($user);
             $userStats->setBoostPv(0);
             $userStats->setBoostKi(0);
@@ -41,8 +41,6 @@ class RegistrationController extends AbstractController
             $entityManager->persist($userStats);
 
             $entityManager->flush();
-
-            // do anything else you need here, like send an email
 
             return $security->login($user, AppAuthenticator::class, 'main');
         }
