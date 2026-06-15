@@ -10,11 +10,7 @@
     {# --- ZONE DE COMBAT VISUELLE --- #}
     <div style="display: flex; justify-content: space-around; margin: 40px 0; align-items: center;">
         <div style="border: 2px solid #0d6efd; padding: 20px; border-radius: 10px; width: 25%;">
-            
-            {# CORRECTION ICI : hero.name au lieu de hero.heroClass #}
             <h3>{{ hero.name | capitalize }}</h3>
-            
-            {# CORRECTION ICI : hero.imagePath au lieu de hero.avatar #}
             <img src="{{ asset('images/' ~ hero.imagePath) }}" alt="{{ hero.name }}" style="width: 150px; border-radius: 10px; border: 2px solid #fff;">
         </div>
 
@@ -35,8 +31,6 @@
     <div style="background-color: #000080; color: white; border: 3px double white; border-radius: 5px; padding: 20px; display: flex; text-align: left; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
         
         <div style="width: 30%; border-right: 2px solid white; padding-right: 20px;">
-            
-            {# CORRECTION ICI : hero.name au lieu de hero.heroClass #}
             <h4 style="text-decoration: underline; color: #00ffff;">{{ hero.name | capitalize }}</h4>
             <p><strong>PV :</strong> {{ hero.hp }} / {{ hero.maxHp }}</p>
             <p><strong>PM :</strong> {{ hero.ki }} / {{ hero.maxKi }}</p>
@@ -70,7 +64,6 @@
 
             <div id="menu-items" style="display: none; grid-template-columns: 1fr 1fr; gap: 15px;">
                 {% for invItem in inventory %}
-                    {# On envoie 'item_ID' à la route d'action #}
                     <form action="{{ path('app_arena_attack', {action: 'item_' ~ invItem.id}) }}" method="post" style="display: inline;">
                         <button type="submit" style="background: none; border: none; padding: 0; color: #00ff00; font-size: 1.1rem; cursor: pointer; font-family: inherit;">
                             🧪 {{ invItem.itemTemplate.name }} (x{{ invItem.quantity }})
@@ -88,15 +81,12 @@
     </div>
 </div>
 
-{# --- LE PETIT SCRIPT JS POUR INTERAGIR --- #}
+
 <script>
 function switchMenu(menuId) {
-    // On masque tous les menus possibles
     document.getElementById('menu-main').style.display = 'none';
     document.getElementById('menu-skills').style.display = 'none';
     document.getElementById('menu-items').style.display = 'none';
-
-    // On affiche uniquement celui demandé
     document.getElementById(menuId).style.display = 'grid';
 }
 </script>

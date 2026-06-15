@@ -19,10 +19,7 @@
         {% endif %}
     </head>
     <body>
-    {# On parcourt tous les types de messages (success, danger, warning, etc.) #}
             {% for label, messages in app.flashes %}
-                
-                {# On affiche chaque message contenu dans cette catégorie #}
                 {% for message in messages %}
                     <div class="alert alert-{{ label }}">
                         {{ message }}
