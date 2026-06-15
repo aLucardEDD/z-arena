@@ -1,0 +1,16 @@
+SEMAINE 1
+Jour 1 brainstorm / recherches d'inspi - noter les idées et mettre en place une idée cohérente
+Jour 2 reflexion sur les besoins (fonctionnalités / entités / bdd)
+Jour 3 sur papier créer un brouillon de tout, lié ensemble
+Jour 4 création du projet en code, début de création des entités
+Jour 5 créations des entités 
+Jour 6 créations des entités / formulaire de connexion/inscription / deconnextion
+
+
+SEMAINE 2
+Jour 1 écran d'accueil + fonction principale du combat
+Jour 2 fonctionnalités du jeux 
+Jour 3 créations des items et des récompenses / gestion de l'inventaire
+Jour 4 création du backoffice
+Jour 5 creation d'un visuel pour l'arene de combat
+Jour 6 deboggage
