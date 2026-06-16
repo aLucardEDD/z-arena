@@ -321,20 +321,20 @@ final class GameController extends AbstractController
                 switch ($template->getType()) {
                     case 'heal':
                         // soins en pourcentage
-                        $soinsHp = (int) round($hero->getMaxHp() * ($valeur / 100));
+                        $soinsHp = round($hero->getMaxHp() * ($valeur / 100));
                         // on se soigne sans dépasser max hp
                         $hero->setHp(min($hero->getMaxHp(), $hero->getHp() + $soinsHp));
                         $this->addFlash('success', "Vous utilisez {$template->getName()} et récupérez {$soinsHp} PV !");
                         break;
                     case 'ki_restore':
-                        $soinsKi = (int) round($hero->getMaxKi() * ($valeur / 100));
+                        $soinsKi = round($hero->getMaxKi() * ($valeur / 100));
                         // pareil mais pour le ki
                         $hero->setKi(min($hero->getMaxKi(), $hero->getKi() + $soinsKi));
                         $this->addFlash('success', "Vous utilisez {$template->getName()} et récupérez {$soinsKi} de Ki !");
                         break;
                     case 'heal_ki_restore':
-                        $soinsHp = (int) round($hero->getMaxHp() * ($valeur / 100));
-                        $soinsKi = (int) round($hero->getMaxKi() * ($valeur / 100)); 
+                        $soinsHp = round($hero->getMaxHp() * ($valeur / 100));
+                        $soinsKi = round($hero->getMaxKi() * ($valeur / 100)); 
                         // les deux en même temps
                         $hero->setHp(min($hero->getMaxHp(), $hero->getHp() + $soinsHp));
                         $hero->setKi(min($hero->getMaxKi(), $hero->getKi() + $soinsKi));

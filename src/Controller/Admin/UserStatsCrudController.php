@@ -14,7 +14,7 @@ class UserStatsCrudController extends AbstractCrudController
 {
     private GameHistoryRepository $gameHistoryRepository;
 
-    // 1. On injecte l'historique des parties via le constructeur
+    // historiques des parties 
     public function __construct(GameHistoryRepository $gameHistoryRepository)
     {
         $this->gameHistoryRepository = $gameHistoryRepository;
@@ -31,7 +31,6 @@ class UserStatsCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             AssociationField::new('user', 'Joueur'),
             
-            // Tes boosts permanents inchangés
             IntegerField::new('boostPv', 'Boost PV 🩸'),
             IntegerField::new('boostKi', 'Boost Ki ⚡'),
             IntegerField::new('boostAttack', 'Boost Attaque ⚔️'),
@@ -43,8 +42,7 @@ class UserStatsCrudController extends AbstractCrudController
                     $user = $entity->getUser();
                     if (!$user) return 0;
 
-                    // On utilise le username en texte pour correspondre à ta base de données
-                    $username = $user->getUserIdentifier(); // ou ->getUsername() selon ta version de Symfony
+                    $username = $user->getUserIdentifier();
 
                     return $this->gameHistoryRepository->count(['username' => $username]);
                 }),
@@ -55,8 +53,6 @@ class UserStatsCrudController extends AbstractCrudController
                     if (!$user) return 'Aucune partie';
 
                     $username = $user->getUserIdentifier();
-
-                    // On cherche avec 'username'
                     $bestGame = $this->gameHistoryRepository->findOneBy(
                         ['username' => $username], 
                         [
