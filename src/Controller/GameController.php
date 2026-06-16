@@ -138,11 +138,11 @@ final class GameController extends AbstractController
         // permet de crée une date inchangeable au moment de la création de la partie
         $hero->setCreatedAt(new \DateTimeImmutable());
         // ajoute les buffs du joueurs aux stats de base du personnage
-        $hero->setHp($template->getBaseHp() + $stats->getBoostPv());
-        $hero->setMaxHp($template->getBaseHp() + $stats->getBoostPv());
-        $hero->setKi($template->getBaseKi() + $stats->getBoostKi());
-        $hero->setMaxKi($template->getBaseKi() + $stats->getBoostKi() ); 
-        $hero->setAttack($template->getAttack() + $stats->getBoostAttack());
+        $hero->setHp(max(0, $template->getBaseHp() + $stats->getBoostPv()));
+        $hero->setMaxHp(max(0,$template->getBaseHp() + $stats->getBoostPv()));
+        $hero->setKi(max(0,$template->getBaseKi() + $stats->getBoostKi()));
+        $hero->setMaxKi(max(0,$template->getBaseKi() + $stats->getBoostKi()) ); 
+        $hero->setAttack(max(0,$template->getAttack() + $stats->getBoostAttack()));
 
         // associe les compétences du template au héros créé si le niveau requis est inférieur ou égal à 1
         foreach ($template->getSkills() as $skill) {
@@ -234,12 +234,13 @@ final class GameController extends AbstractController
             // choisi un ennemi au hasard parmis ceux qui correspondent
             $randomTemplate = $templates[array_rand($templates)];
 
+            
 
             // multiplicateur de stat pour que les ennemis soient plus fort en fonction du niveau
             $multiplicateur = 1 + ($world * 0.2) + ($stage  * 0.1);
-            $hp = round($randomTemplate->getBaseHp() * $multiplicateur);
-            $attack = round($randomTemplate->getBaseAttack() * $multiplicateur);
-            $xpReward = round($randomTemplate->getXpReward() * $multiplicateur);
+            $hp = max(0, round($randomTemplate->getBaseHp() * $multiplicateur));
+            $attack = max(0, round($randomTemplate->getBaseAttack() * $multiplicateur));
+            $xpReward = max(0, round($randomTemplate->getXpReward() * $multiplicateur));
 
             // on clone le template avec les stats adapatés
             // permet de garder en mémoire le monstre que l'on combat si jamais on quitte la partie
