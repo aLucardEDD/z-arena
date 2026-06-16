@@ -34,10 +34,10 @@ final class GameController extends AbstractController
     public function tirageDropRate(array $items)
     {
         // calcul du total des drop rate de chaque item du tableau
-        // array_sum additionne tous les elements d'un tableau
-        // array_map crée un tableau 
-        // fn($i) => $i->getDropRate() est une fonction qui retourne le drop rate d'un item
-        $tauxTotal = array_sum(array_map(fn($i) => $i->getDropRate(), $items));
+        $tauxTotal = 0;
+        foreach ($items as $item) {
+            $tauxTotal += $item->getDropRate();
+        }
         // genere un nombre aléatoire entre 1 et le total
         $rand = mt_rand(1, $tauxTotal);
         // pour chaque item du tableau, on soustrait son drop rate au tirage aléatoire
@@ -237,12 +237,13 @@ final class GameController extends AbstractController
 
             // multiplicateur de stat pour que les ennemis soient plus fort en fonction du niveau
             $multiplicateur = 1 + ($world * 0.2) + ($stage  * 0.1);
-            $hp = (int) round($randomTemplate->getBaseHp() * $multiplicateur);
-            $attack = (int) round($randomTemplate->getBaseAttack() * $multiplicateur);
-            $xpReward = (int) round($randomTemplate->getXpReward() * $multiplicateur);
+            $hp = round($randomTemplate->getBaseHp() * $multiplicateur);
+            $attack = round($randomTemplate->getBaseAttack() * $multiplicateur);
+            $xpReward = round($randomTemplate->getXpReward() * $multiplicateur);
 
             // on clone le template avec les stats adapatés
             // permet de garder en mémoire le monstre que l'on combat si jamais on quitte la partie
+
             $monster = new ActiveMonster(
                 $randomTemplate->getName(),
                 $hp,
