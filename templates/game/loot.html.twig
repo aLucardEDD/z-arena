@@ -3,7 +3,7 @@
 <div class="loot-container" style="display: flex; gap: 20px;">
     {% for item in choices %}
         <div class="card">
-            <img src="{{ asset('images/items/' ~ item.imagePath) }}" alt="{{ item.name }}">
+            <img src="{{ asset('images/' ~ item.imagePath) }}" alt="{{ item.name }}" width="50px">
             <h3>{{ item.name }}</h3>
             <p>{{ item.description }}</p>
             
